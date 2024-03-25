@@ -1,5 +1,5 @@
 print("Ola Mundo")
-input("Não sei")
+idade = input("digite sua idade")
 
 nome=input("Digite um nome: ")
 print(nome)
