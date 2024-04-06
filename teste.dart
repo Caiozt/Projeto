@@ -7,13 +7,11 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   static const String _title = 'Hair Cut';
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
       theme: ThemeData(
-        // useMaterial3: false,
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(),
@@ -23,17 +21,14 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-  // This class is the configuration for the state.
+  
   @override
   MyHomePageState createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
    void navigateToRegistrationUserPage() {
-    // Navigate to the registration page for users
+    // Navega para a página de registro do usuário
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const RegistrationUserPage()),
@@ -41,7 +36,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void navigateToLoginUserPage() {
-    // Navigate to the login page for users
+    // Navega para a página de login do usuário
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const LoginUserPage()),
@@ -49,7 +44,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void navigateToRegistrationOrganizationPage() {
-    // Navigate to the registration page for organizations
+    // Navega para a página de registro da organização
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const RegistrationOrganizationPage()),
@@ -57,7 +52,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   void navigateToLoginOrganizationPage() {
-    // Navigate to the login page for organizations
+    // Navega para a página de login da organização
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const LoginOrganizationPage()),
@@ -68,14 +63,12 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: const Text(
           'Hair Cut',
           style: TextStyle(
-            color: Colors.white, // Cor da fonte
-            fontSize: 30.0, // Tamanho da fonte
-            fontWeight: FontWeight.bold, // Negrito
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: const Color(0xff0e06f7),
@@ -85,8 +78,6 @@ class MyHomePageState extends State<MyHomePage> {
         child: Container(
           padding: const EdgeInsets.all(60),
           color: Colors.blue,
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -95,7 +86,6 @@ class MyHomePageState extends State<MyHomePage> {
                 child: const Text('Registrar como Usuário'),
               ), //registrar como Usuario
               const SizedBox(
-                //Use of SizedBox
                 height: 20,
               ), //espaço
               ElevatedButton(
@@ -103,7 +93,6 @@ class MyHomePageState extends State<MyHomePage> {
                 child: const Text('Login como Usuário'),
               ), //login como usuario
               const SizedBox(
-                //Use of SizedBox
                 height: 20,
               ), //espaço
               ElevatedButton(
@@ -111,7 +100,6 @@ class MyHomePageState extends State<MyHomePage> {
                 child: const Text('Registrar como Organização'),
               ), //registrar como organização
               const SizedBox(
-                //Use of SizedBox
                 height: 20,
               ), // espaço
               ElevatedButton(
@@ -125,20 +113,99 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+
+
+//registro do usuário
+
 class RegistrationUserPage extends StatelessWidget {
   const RegistrationUserPage({super.key});
-  @override
+
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Registro como Usuário'),
       ),
-      body: const Center(
-        child: Text('Página de registro de usuário'),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'CPF do Usuário',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'XXX.XXX.XXX-XX',
+              ),
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(11),
+                _CpfMaskTextInputFormatter(),
+              ],
+              ),
+
+              
+            const SizedBox(height: 20),
+            const Text(
+              'Nome do Usuário',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Seu nome de usuário',
+              ),
+              keyboardType: TextInputType.text,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Senha',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Senha',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Confirmar Senha',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Confirmar Senha',
+              ),
+              obscureText: true,
+              ),
+
+
+
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                //adicionar os bgl do sql, n sei
+              },
+              child: const Text('Registrar'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
+
+
+
+
+
+//Login do cliente
 
 class LoginUserPage extends StatelessWidget {
   const LoginUserPage({super.key});
@@ -159,7 +226,7 @@ class LoginUserPage extends StatelessWidget {
 
 
 
-
+//Registro da empresa
 
 class RegistrationOrganizationPage extends StatelessWidget {
   const RegistrationOrganizationPage({super.key});
@@ -242,6 +309,7 @@ class RegistrationOrganizationPage extends StatelessWidget {
   }
 }
 
+//caixa de texto do cnpj
 class _CnpjMaskTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -273,9 +341,38 @@ class _CnpjMaskTextInputFormatter extends TextInputFormatter {
   }
 }
 
+//caixa de texto do cpf
+class _CpfMaskTextInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    final text = newValue.text;
+    var newText = '';
+    var index = 0;
+
+    for (var i = 0; i < text.length; i++) {
+      if (text[i] == '.' || text[i] == '-') {
+        continue;
+      }
+
+      if (index == 3 || index == 6 ) {
+        newText += '.';
+      } else if (index == 9) {
+        newText += '-';
+      }
+
+      newText += text[i];
+      index++;
+    }
+
+    return TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+}
 
 
-
+//Login da organização
 class LoginOrganizationPage extends StatelessWidget {
    const LoginOrganizationPage({super.key});
   @override
