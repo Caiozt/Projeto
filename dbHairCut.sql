@@ -60,7 +60,7 @@ create table produtos(
     Descricao varchar(400),
     foreign key (Descricao) references categorias(Descricao)
 );
-drop table produtos;
+
 desc produtos;
 
 create table servicos(
