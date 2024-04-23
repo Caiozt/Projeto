@@ -1,4 +1,4 @@
-<strong>Projeto</strong> <br/>
+<b>Projeto</b> <br/>
 Arquivos pra ignorar (foram testes que fizemos): <br/>
 Oi.py <br/>
 alguma.dart <br/>
