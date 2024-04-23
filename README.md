@@ -9,7 +9,7 @@ tutorial_para_alguns_arquivos.pdf <br/>
 Provavelmente vai ser melhor apagar eles mais tarde. Antes de pegar o zip.
 
 <b>Progresso:</b> <br/>
-23/04/2024: 
+<em>23/04/2024:</em> <br/>
 Área de registro de usuário e de organização devem estar funcionando agora, os testes funcionaram.<br/>
 A área do login de usuário e da organização ainda não foi implementada. <br/>
 A ação de "Confirmar senha" ainda não foi implementada nos registros. <br/>
