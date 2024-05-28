@@ -46,9 +46,9 @@ class GerenciamentoState extends State<Gerenciamento> {
                       Text('ID de Usuário: ${agendamento['id_usuario']}'),
                       Text('CPF: ${agendamento['cpf']}'),
                       Text('Nome: ${agendamento['nomeU']}'),
-                      Text('Horário: ${agendamento['horario']}'), // Adicionando horário
-                      Text('Dia: ${agendamento['dia']}'), // Adicionando dia
-                      // Don't display senhaU
+                      Text('Horário: ${agendamento['horario']}'),
+                      Text('Dia: ${agendamento['dia']}'), 
+                    
                     ],
                   ),
                 ),
