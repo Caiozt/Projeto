@@ -3,58 +3,68 @@ import socketserver
 import mysql.connector
 import json
 import configparser
+import traceback
 
 class MyRequestHandler(http.server.BaseHTTPRequestHandler):
     last_cnpj = None
-    last_nome_organização = None
-    last_senha_organização = None
+    last_nome_organizacao = None
+    last_senha_organizacao = None
+    last_id_agendamento = None
+    last_id_usuario = None
     last_cpf = None
     last_nomeU = None
     last_senhaU = None
-
+    last_horario = None
+    last_dia = None
 
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Methods', '*')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Max-Age', '86400')
         self.end_headers()
+
+    def handle_response(self, status_code, message):
+        self.send_response(status_code)
+        self.send_header('Content-type', 'application/json')
+        self.end_headers()
+        self.wfile.write(json.dumps({"message": message}).encode('utf-8'))
 
     def do_GET(self):
         self.send_response(200)
-        self.send_header('Content-type', 'text/html')
+        self.send_header('Content-type', 'application/json')
         self.end_headers()
-        response_content = b"<html><body><h1>Hello, world!</h1>"
-
+    
+        response_data = {}
+    
         if self.last_cpf is not None:
-           response_content += f"<p>Último CPF recebido: {self.last_cpf}</p>".encode('utf-8')
-           response_content += f"<p>Último Nome de Usuário recebido: {self.last_nomeU}</p>".encode('utf-8')
-           response_content += f"<p>Última Senha de Usuario recebida: {self.last_senhaU}</p>".encode('utf-8')
-           response_content += b"</body></html>"
-           self.wfile.write(response_content)
+            response_data['cpf'] = self.last_cpf
+            response_data['id_usuario'] = self.last_id_usuario
+            response_data['nomeU'] = self.last_nomeU
+            response_data['senhaU'] = self.last_senhaU
 
-        #verifica se chegaram dados
         if self.last_cnpj is not None:
-            response_content += f"<p>Último CNPJ recebido: {self.last_cnpj}</p>".encode('utf-8')
-            response_content += f"<p>Último Nome da Organização recebido: {self.last_nome_organização}</p>".encode('utf-8')
-            response_content += f"<p>Última Senha da Organização recebida: {self.last_senha_organização}</p>".encode('utf-8')
-            response_content += b"</body></html>"
-            self.wfile.write(response_content)
+            response_data['cnpj'] = self.last_cnpj
+            response_data['nome_organizacao'] = self.last_nome_organizacao
+            response_data['senha_organizacao'] = self.last_senha_organizacao
+
+        if self.last_horario is not None:
+            response_data['id_agendamento'] = self.last_id_agendamento
+            response_data['horario'] = self.last_horario
+            response_data['dia'] = self.last_dia
+
+    # Convert response data to JSON and send
+        self.wfile.write(json.dumps(response_data).encode('utf-8'))
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
 
         try:
-            #inicializa configparser
             config = configparser.ConfigParser()
-
-            #escreve o caminho para um arquivo .ini no seu pc para não ter que pôr a senha etc do Mysql nesse codigo.
-            caminho_config = "C:\\Users\\rober\\Downloads\\arquivo_config_sql\\config.ini"
-        
-
+            caminho_config = "C:\\Users\\rober\\Downloads\\arquivo_config_sql\\config1.ini"
             config.read(caminho_config)
-
 
             host = config['mysql']['host']
             user = config['mysql']['user']
@@ -74,62 +84,97 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             data = json.loads(post_data.decode('utf-8'))
             print("Dados recebidos:", data)
 
-            if 'cnpj' in data and 'nome_organização' in data and 'senha_organização' in data:
+            if 'cnpj' in data and 'nome_organizacao' in data and 'senha_organizacao' in data:
                 self.last_cnpj = data['cnpj']
-                self.last_nome_organização = data['nome_organização']
-                self.last_senha_organização = data['senha_organização']
+                self.last_nome_organizacao = data['nome_organizacao']
+                self.last_senha_organizacao = data['senha_organizacao']
 
-                sql = "INSERT INTO organização (cnpj, nome_organização, senha_organização) VALUES (%s, %s, %s)"
-                val = (data['cnpj'], data['nome_organização'], data['senha_organização'])
-                print("Consulta SQL da Organização:", sql)
-                print("Valores da Organização:", val)
-
+                cursor.execute("SELECT cnpj FROM organizacao WHERE cnpj = %s", (data['cnpj'],))
+                existing_organization = cursor.fetchone()
+                if existing_organization:
+                    self.handle_response(409, "Organização já existe")
+                else:
+                    sql = "INSERT INTO organizacao (cnpj, nome_organizacao, senha_organizacao) VALUES (%s, %s, %s)"
+                    val = (data['cnpj'], data['nome_organizacao'], data['senha_organizacao'])
+                    print("Consulta SQL da Organização:", sql)
+                    print("Valores da Organização:", val)
+                    cursor.execute(sql, val)
+                    self.handle_response(201, "Registro de organização feito com sucesso")
+            
             elif 'cpf' in data and 'nomeU' in data and 'senhaU' in data:
                 self.last_cpf = data['cpf']
                 self.last_nomeU = data['nomeU']
                 self.last_senhaU = data['senhaU']
+                cursor.execute("SELECT cpf FROM usuario WHERE cpf = %s", (data['cpf'],))
+                existing_usuario = cursor.fetchone()
 
-           
-                sql = "INSERT INTO user (cpf, nomeU, senhaU) VALUES (%s, %s, %s)"
-                val = (data['cpf'], data['nomeU'], data['senhaU'])
-                print("Consulta SQL do Usuário:", sql)
-                print("Valores do Usuário:", val)
+                if existing_usuario:
+                    self.handle_response(409, "Usuário já existe")
+                else:
+                    sql = "INSERT INTO usuario (cpf, nomeU, senhaU) VALUES (%s, %s, %s)"
+                    val = (data['cpf'], data['nomeU'], data['senhaU'])
+                    print("Consulta SQL do Usuário:", sql)
+                    print("Valores do Usuário:", val)
+                    cursor.execute(sql, val)
+                    self.handle_response(201, "Registro de usuário feito com sucesso")
+                
+            elif 'login_usuario' in data:
+                cpf = data['login_usuario']['cpf']
+                senhaU = data['login_usuario']['senhaU']
+
+                cursor.execute("SELECT cpf FROM usuario WHERE cpf = %s AND senhaU = %s", (cpf, senhaU))
+                usuario = cursor.fetchone()
+
+                if usuario:
+                    self.handle_response(200, "Login de usuário realizado com sucesso")
+                else:
+                    self.handle_response(401, "CPF ou senha de usuário incorretos")
+
+            elif 'login_organizacao' in data:
+                cnpj = data['login_organizacao']['cnpj']
+                senha_organizacao = data['login_organizacao']['senha_organizacao']
+
+                cursor.execute("SELECT cnpj FROM organizacao WHERE cnpj = %s AND senha_organizacao = %s", (cnpj, senha_organizacao))
+                organization = cursor.fetchone()
+
+                if organization:
+                    self.handle_response(200, "Login de organização realizado com sucesso")
+                else:
+                    self.handle_response(401, "CNPJ ou senha de organização incorretos")
+
+            elif 'agendamento' in data:
+                horario = data['agendamento']['horario']
+                dia  = data['agendamento']['dia']
+
+                cursor.execute("SELECT horario FROM agendamento WHERE horario = %s AND dia = %s", (horario, dia))
+                agendamento_existe = cursor.fetchone()
+
+                if agendamento_existe:
+                    self.handle_response(200, "Agendamento já existe para esse horário")
+                else:
+                    sql = "INSERT INTO agendamento (horario, dia) VALUES (%s, %s)"
+                    val = (horario, dia)
+                    print("Consulta SQL do Agendamento:", sql)
+                    print("Valores do Agendamento:", val)
+                    cursor.execute(sql, val)
+                    self.handle_response(201, "Agendamento feito com sucesso")
 
             else:
                 raise ValueError("dados errados")
 
-            cursor.execute(sql, val)
-
-            #commit
             db.commit()
-
             cursor.close()
             db.close()
-
-            #envia resposta de sucesso
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"message": "Registro feito com sucesso"}).encode('utf-8'))
         
         except json.decoder.JSONDecodeError:
-            self.send_response(400)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": "Erro ao decodificar JSON nos dados recebidos"}).encode('utf-8'))
+            self.handle_response(400, "Erro ao decodificar JSON nos dados recebidos")
         
         except mysql.connector.Error as e:
-            self.send_response(500)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": f"Erro ao acessar o banco de dados: {str(e)}"}).encode('utf-8'))
+            self.handle_response(330, f"Erro ao acessar o banco de dados: {str(e)}")
 
-        except Exception as e:
-            #exceções não previstas, envia resposta de erro comum
-            self.send_response(500)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": f"Erro interno no servidor: {str(e)}"}).encode('utf-8'))
+        except Exception as x:
+            self.handle_response(550, f"Erro interno no servidor: {str(x)}")
+
 
 if __name__ == '__main__':
     PORT = 80

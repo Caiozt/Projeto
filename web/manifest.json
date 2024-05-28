@@ -1,6 +1,6 @@
 {
-    "name": "app_principal",
-    "short_name": "app_principal",
+    "name": "app_haircut",
+    "short_name": "app_haircut",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
