@@ -54,7 +54,6 @@ class MyRequestHandler(http.server.BaseHTTPRequestHandler):
             response_data['horario'] = self.last_horario
             response_data['dia'] = self.last_dia
 
-    # Convert response data to JSON and send
         self.wfile.write(json.dumps(response_data).encode('utf-8'))
 
     def do_POST(self):
