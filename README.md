@@ -17,7 +17,7 @@ Nesse caso a URL que deve ser copiada e colada para substituir a anterior é "ht
 <b>projeto-haircut-database.sql:</b> <br/>
 Tratam-se dos comandos utilizados para criar o banco de dados que recebe as informações utilizadas no aplicativo Hair Cut. <br/>
 É essencial executar essas instruções para que as informações tenham onde ser armazenadas. <br/>
-É recomendado executá-las no MySQL Workbench <br/>
+É recomendado executá-las no MySQL Workbench. <br/>
 É necessario que o banco de dados criado com a instrução CREATE DATABASE seja nomeado "haircut_full", exceto se for feita uma mudança no arquivo "config1.ini" na área "database", então será possivel escolher o nome. <br/>
 Exemplo: <br/>
 Se o comando executado for "CREATE DATABASE hair"<br/>
@@ -28,7 +28,7 @@ database=hair <br/>
 <b>arquivo_config_sql:</b><br/>
 Aqui está localizado o arquivo .ini nomeado "config1.ini" que é usado para que seja realizada a execução dos comandos como SELECT e INSERT no banco de dados.<br/>
 Ele deve ser atualizado para conter o host, user, password e database, corretos do usuário que deseja utilizar o programa. <br/>
-A área password está vazia para que essa mudança seja feita<br/>
+A área password está vazia para que essa mudança seja feita.<br/>
 <br/>
 
 
