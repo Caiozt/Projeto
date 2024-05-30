@@ -1,10 +1,10 @@
 <b>Projeto: Hair Cut</b> <br/>
 Procedimento para o uso: <br/>
-Para a utilização do aplicativo Hair Cut são necessários algumas mudanças manuais no código.  <br/>
-Isso é necessário porque neste projeto não é usado um endereço de servidor fixo que permita virtualizar o servidor local para que funcione ininterruptamente sem a necessidade de ativação manual. O Ngrok permite apenas que seja usado um endereço que é gerado aleatoriamente ao executá-lo. <br/>
+Para a utilização do aplicativo Hair Cut são necessárias algumas mudanças manuais no código.  <br/>
+Elas são necessárias porque neste projeto não é usado um endereço de servidor fixo que permita virtualizar o servidor local para que funcione ininterruptamente sem a necessidade de ativação manual. O Ngrok permite apenas que seja usado um endereço que é gerado aleatoriamente ao executá-lo. <br/>
 
 <b>server.py:</b> <br/>
-Para ativar o servidor local, é necessario executar o comando "python server.py" no terminal no software Visual Studio Code. <br/>
+Para ativar o servidor local, é necessário executar o comando "python server.py" no terminal no software Visual Studio Code. <br/>
 <br/>
 
 <b>data.dart:</b> <br/>
@@ -19,7 +19,7 @@ Nesse caso a URL que deve ser copiada e colada para substituir a anterior é "ht
 Tratam-se dos comandos utilizados para criar o banco de dados que recebe as informações utilizadas no aplicativo Hair Cut. <br/>
 É essencial executar essas instruções para que as informações tenham onde ser armazenadas. <br/>
 É recomendado executá-las no MySQL Workbench. <br/>
-É necessario que o banco de dados criado com a instrução CREATE DATABASE seja nomeado "haircut_full", exceto se for feita uma mudança no arquivo "config1.ini" na área "database", então será possivel escolher o nome. <br/>
+É necessário que o banco de dados criado com a instrução CREATE DATABASE seja nomeado "haircut_full", exceto se for feita uma mudança no arquivo "config1.ini" na área "database", então será possivel escolher o nome. <br/>
 Exemplo: <br/>
 Se o comando executado for "CREATE DATABASE hair"<br/>
 A seguinte mudança deve ser feita no config1.ini: <br/>
