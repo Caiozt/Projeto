@@ -32,4 +32,9 @@ A área password está vazia para que essa mudança seja feita.<br/>
 <br/>
 
 
+<b>HairCut.apk</b><br/>
+Trata-se do arquivo .apk que pode ser baixado em um smartphone Android. Entretanto, com as mudanças supracitadas, é necessario criar outro arquivo .apk por meio do comando:<br/>
+"flutter build apk --build-name=1.0 --build-number=1" em um  terminal adjacente (o terminal onde o servidor local está sendo usado não deve ser fechado). <br/>
+Assim, será criado um novo arquivo .apk que poderá ser encontrado por meio do caminho: "app_haircut\build\app\outputs\flutter-apk". <br/>
+Esse novo arquivo aparecerá sob o nome de "app-release.apk" nas pasta "flutter-apk".
 
