@@ -3,7 +3,7 @@ Procedimento para o uso: <br/>
 Para a utilização do aplicativo Hair Cut são necessários algumas mudanças manuais no código:  <br/>
 
 server.py: <br/>
-Para ativar o servidor local, é necessario executar o comando "python server.py" no terminal. <br/>
+Para ativar o servidor local, é necessario executar o comando "python server.py" no terminal no software Visual Studio Code. <br/>
 <br/>
 
 data.dart: <br/>
@@ -18,10 +18,11 @@ projeto-haircut-database.sql:<br/>
 Tratam-se dos comandos utilizados para criar o banco de dados que recebe as informações utilizadas no aplicativo Hair Cut. <br/>
 É essencial executar essas instruções para que as informações tenham onde ser armazenadas. <br/>
 É recomendado executá-las no MySQL Workbench <br/>
+É necessario que o banco de dados criado com a instrução CREATE DATABASE seja nomeado "haircut_full", exceto se for feita uma mudança no arquivo "config1.ini" na área "database".
 <br/>
 
 arquivo_config_sql:
-Aqui está localizado o arquivo .ini que é usado para que seja realizada a execução dos comandos como SELECT e INSERT no banco de dados.<br/>
+Aqui está localizado o arquivo .ini nomeado "config1.ini" que é usado para que seja realizada a execução dos comandos como SELECT e INSERT no banco de dados.<br/>
 Ele deve ser atualizado para conter o host, user, password e database, do usuário que deseja utilizar o programa. <br/>
 <br/>
 
