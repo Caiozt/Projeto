@@ -19,9 +19,9 @@ Tratam-se dos comandos utilizados para criar o banco de dados que recebe as info
 É essencial executar essas instruções para que as informações tenham onde ser armazenadas. <br/>
 É recomendado executá-las no MySQL Workbench <br/>
 É necessario que o banco de dados criado com a instrução CREATE DATABASE seja nomeado "haircut_full", exceto se for feita uma mudança no arquivo "config1.ini" na área "database", então será possivel escolher o nome. <br/>
-Exemplo: 
-Se o comando executado for "CREATE DATABASE hair"
-O seguinte mudança deve ser feita no config1.ini: 
+Exemplo: <br/>
+Se o comando executado for "CREATE DATABASE hair"<br/>
+O seguinte mudança deve ser feita no config1.ini: <br/>
 database=hair <br/>
 <br/>
 
