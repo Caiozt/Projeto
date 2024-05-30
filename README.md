@@ -1,6 +1,7 @@
 <b>Projeto: Hair Cut</b> <br/>
 Procedimento para o uso: <br/>
-Para a utilização do aplicativo Hair Cut são necessários algumas mudanças manuais no código:  <br/>
+Para a utilização do aplicativo Hair Cut são necessários algumas mudanças manuais no código.  <br/>
+Isso é necessário porque neste projeto não é usado um endereço de servidor fixo que permita virtualizar o servidor local para que funcione ininterruptamente sem a necessidade de ativação manual. O Ngrok permite apenas que seja usado um endereço que é gerado aleatoriamente ao executá-lo. <br/>
 
 <b>server.py:</b> <br/>
 Para ativar o servidor local, é necessario executar o comando "python server.py" no terminal no software Visual Studio Code. <br/>
