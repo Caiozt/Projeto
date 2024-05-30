@@ -25,7 +25,7 @@ O seguinte mudança deve ser feita no config1.ini: <br/>
 database=hair <br/>
 <br/>
 
-arquivo_config_sql:
+arquivo_config_sql:<br/>
 Aqui está localizado o arquivo .ini nomeado "config1.ini" que é usado para que seja realizada a execução dos comandos como SELECT e INSERT no banco de dados.<br/>
 Ele deve ser atualizado para conter o host, user, password e database, corretos do usuário que deseja utilizar o programa. <br/>
 A área password está vazia para que essa mudança seja feita<br/>
